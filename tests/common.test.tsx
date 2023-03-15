@@ -36,7 +36,7 @@ describe('Common render', () => {
                   <HeadlessAccordion.Panel
                     style={{
                       transitionProperty: `max-height`,
-                      transitionDuration: `0.3s`,
+                      transitionDuration: `0.15s`,
                     }}
                   >
                     <div>{item.content}</div>

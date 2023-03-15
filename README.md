@@ -34,14 +34,14 @@ const list = [
     title: 'Item 3',
     content: 'libero magnam iusto aspernatur voluptatibus hic obcaecati ipsum',
   },
-];
+]
 
 const App = () => {
   return (
     <>
       <HeadlessAccordion defaultActiveKey={[0]}>
         {list.map((item, key: number) => (
-          <HeadlessAccordion.Item eventKey={key}>
+          <HeadlessAccordion.Item key={key} eventKey={key}>
             {({ open }) => {
               return (
                 <>
@@ -51,13 +51,13 @@ const App = () => {
                   <HeadlessAccordion.Panel
                     style={{
                       transitionProperty: `max-height`,
-                      transitionDuration: `0.3s`,
+                      transitionDuration: `0.15s`,
                     }}
                   >
                     <div>{item.content}</div>
                   </HeadlessAccordion.Panel>
                 </>
-              );
+              )
             }}
           </HeadlessAccordion.Item>
         ))}
