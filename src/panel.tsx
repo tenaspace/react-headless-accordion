@@ -6,8 +6,7 @@ import { IHeadlessAccordionPanel } from './models/panel';
 
 const HeadlessAccordionPanel = ({
   as = `div`,
-  className,
-  children,
+  ...props
 }: IHeadlessAccordionPanel) => {
   const As = as;
   const { defaultActiveKey } = useContext(ContextAccordion);
@@ -51,14 +50,15 @@ const HeadlessAccordionPanel = ({
   return (
     <As
       ref={ref}
-      className={`${className ?? ``}`}
+      className={`${props.className ?? ``}`}
       style={{
+        ...props.style,
         display: `${
           firstRender && !defaultActiveKey.includes(eventKey) && `none`
         }`,
       }}
     >
-      {children}
+      {props.children}
     </As>
   );
 };
