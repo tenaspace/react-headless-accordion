@@ -2,13 +2,13 @@ import { useEffect, useContext, useRef } from 'react';
 import ContextAccordion from './contexts/accordion';
 import ContextAccordionItem from './contexts/item';
 import { useIsFirstRender, useEventListener } from './hooks';
-import { IAccordionPanel } from './models/panel';
+import { IHeadlessAccordionPanel } from './models/panel';
 
 const HeadlessAccordionPanel = ({
   as = `div`,
   className,
   children,
-}: IAccordionPanel) => {
+}: IHeadlessAccordionPanel) => {
   const As = as;
   const { defaultActiveKey } = useContext(ContextAccordion);
   const { eventKey, open } = useContext(ContextAccordionItem);

@@ -1,9 +1,9 @@
 import { ElementType, ReactNode } from 'react';
-import { IContextAccordionItem } from './contexts/item';
+import { IContextHeadlessAccordionItem } from './contexts/item';
 
-export interface IAccordionItem {
+export interface IHeadlessAccordionItem {
   as?: ElementType;
-  eventKey: IContextAccordionItem[`eventKey`];
+  eventKey: IContextHeadlessAccordionItem[`eventKey`];
   id?: string;
   className?: string;
   children: ({ open }: { open: boolean }) => ReactNode;

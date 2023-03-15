@@ -2,7 +2,7 @@ import { useState } from 'react';
 import HeadlessAccordionItem from './item';
 import HeadlessAccordionButton from './button';
 import HeadlessAccordionPanel from './panel';
-import { IAccordion } from './models/accordion';
+import { IHeadlessAccordion } from './models/accordion';
 import ContextAccordion from './contexts/accordion';
 
 const HeadlessAccordion = ({
@@ -11,10 +11,10 @@ const HeadlessAccordion = ({
   defaultActiveKey = [],
   className,
   children,
-}: IAccordion) => {
+}: IHeadlessAccordion) => {
   const As = as;
   const [active, setActive] =
-    useState<IAccordion[`defaultActiveKey`]>(defaultActiveKey);
+    useState<IHeadlessAccordion[`defaultActiveKey`]>(defaultActiveKey);
   return (
     <ContextAccordion.Provider
       value={{

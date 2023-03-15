@@ -1,6 +1,6 @@
 import { ElementType, ReactNode } from 'react';
 
-export interface IAccordionPanel {
+export interface IHeadlessAccordionPanel {
   as?: ElementType;
   className?: string;
   children?: ReactNode;

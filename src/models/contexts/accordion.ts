@@ -1,4 +1,4 @@
-export interface IContextAccordion {
+export interface IContextHeadlessAccordion {
   multipleOpen: boolean;
   defaultActiveKey: number[];
   active: number[];

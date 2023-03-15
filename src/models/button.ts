@@ -1,5 +1,5 @@
 import { ElementType, HTMLAttributes, ReactElement } from 'react';
 
-export interface IAccordionButton extends HTMLAttributes<ReactElement> {
+export interface IHeadlessAccordionButton extends HTMLAttributes<ReactElement> {
   as?: ElementType;
 }

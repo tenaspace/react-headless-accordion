@@ -1,10 +1,10 @@
 import { ElementType, ReactNode } from 'react';
-import { IContextAccordion } from './contexts/accordion';
+import { IContextHeadlessAccordion } from './contexts/accordion';
 
-export interface IAccordion {
+export interface IHeadlessAccordion {
   as?: ElementType;
-  multipleOpen?: IContextAccordion[`multipleOpen`];
-  defaultActiveKey?: IContextAccordion[`defaultActiveKey`];
+  multipleOpen?: IContextHeadlessAccordion[`multipleOpen`];
+  defaultActiveKey?: IContextHeadlessAccordion[`defaultActiveKey`];
   className?: string;
   children?: ReactNode;
 }

@@ -1,17 +1,17 @@
 import { useContext } from 'react';
 import ContextAccordion from './contexts/accordion';
 import ContextAccordionItem from './contexts/item';
-import { IAccordionButton } from './models/button';
-import { IContextAccordionItem } from './models/contexts/item';
+import { IHeadlessAccordionButton } from './models/button';
+import { IContextHeadlessAccordionItem } from './models/contexts/item';
 
 const HeadlessAccordionButton = ({
   as = `button`,
   ...props
-}: IAccordionButton) => {
+}: IHeadlessAccordionButton) => {
   const As = as;
   const { multipleOpen, active, setActive } = useContext(ContextAccordion);
   const { eventKey } = useContext(ContextAccordionItem);
-  const handleOnClick = (eventKey: IContextAccordionItem[`eventKey`]) => {
+  const handleOnClick = (eventKey: IContextHeadlessAccordionItem[`eventKey`]) => {
     const listActive = [...active];
     const includes = listActive.includes(eventKey);
     if (multipleOpen) {

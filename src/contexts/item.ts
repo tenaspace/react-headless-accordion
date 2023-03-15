@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import { IContextAccordionItem } from 'src/models/contexts/item';
+import { IContextHeadlessAccordionItem } from 'src/models/contexts/item';
 
-const ContextAccordionItem = createContext<IContextAccordionItem>({
+const ContextAccordionItem = createContext<IContextHeadlessAccordionItem>({
   eventKey: -1,
   open: false,
 });

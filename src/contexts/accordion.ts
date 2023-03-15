@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import { IContextAccordion } from 'src/models/contexts/accordion';
+import { IContextHeadlessAccordion } from 'src/models/contexts/accordion';
 
-const ContextAccordion = createContext<IContextAccordion>({
+const ContextAccordion = createContext<IContextHeadlessAccordion>({
   multipleOpen: false,
   defaultActiveKey: [],
   active: [],
