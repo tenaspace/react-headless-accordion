@@ -1,23 +1,8 @@
-import { ElementType, useContext, createContext, ReactNode } from 'react';
-import { ContextAccordion } from '.';
-
-export interface IContextHeadlessAccordionItem {
-  eventKey: number;
-  open: boolean;
-}
-
-export interface IHeadlessAccordionItem {
-  as?: ElementType;
-  eventKey: IContextHeadlessAccordionItem[`eventKey`];
-  id?: string;
-  className?: string;
-  children: ({ open }: { open: boolean }) => ReactNode;
-}
-
-export const ContextAccordionItem = createContext<IContextHeadlessAccordionItem>({
-  eventKey: -1,
-  open: false,
-});
+import { useContext } from 'react';
+import ContextAccordion from './contexts/accordion';
+import ContextAccordionItem from './contexts/item';
+import { IContextAccordionItem } from './models/contexts/item';
+import { IAccordionItem } from './models/item';
 
 const HeadlessAccordionItem = ({
   as = `div`,
@@ -25,10 +10,10 @@ const HeadlessAccordionItem = ({
   id,
   className,
   children,
-}: IHeadlessAccordionItem) => {
+}: IAccordionItem) => {
   const As = as;
   const { active } = useContext(ContextAccordion);
-  const open: IContextHeadlessAccordionItem[`open`] = active
+  const open: IContextAccordionItem[`open`] = active
     ? active.includes(eventKey)
     : false;
   return (

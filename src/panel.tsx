@@ -1,19 +1,14 @@
-import { ElementType, useEffect, useContext, useRef, ReactNode } from "react";
-import { useIsFirstRender, useEventListener } from "./hooks";
-import { ContextAccordion } from ".";
-import { ContextAccordionItem } from "./item";
-
-export interface IHeadlessAccordionPanel {
-  as?: ElementType;
-  className?: string;
-  children?: ReactNode;
-}
+import { useEffect, useContext, useRef } from 'react';
+import ContextAccordion from './contexts/accordion';
+import ContextAccordionItem from './contexts/item';
+import { useIsFirstRender, useEventListener } from './hooks';
+import { IAccordionPanel } from './models/panel';
 
 const HeadlessAccordionPanel = ({
   as = `div`,
   className,
   children,
-}: IHeadlessAccordionPanel) => {
+}: IAccordionPanel) => {
   const As = as;
   const { defaultActiveKey } = useContext(ContextAccordion);
   const { eventKey, open } = useContext(ContextAccordionItem);

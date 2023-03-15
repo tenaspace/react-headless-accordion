@@ -1,28 +1,24 @@
-import { ElementType, HTMLAttributes, ReactElement, useContext } from "react";
-import { ContextAccordion } from ".";
-import { ContextAccordionItem, IContextHeadlessAccordionItem } from "./item";
-
-export interface IHeadlessAccordionButton extends HTMLAttributes<ReactElement> {
-  as?: ElementType;
-}
+import { useContext } from 'react';
+import ContextAccordion from './contexts/accordion';
+import ContextAccordionItem from './contexts/item';
+import { IAccordionButton } from './models/button';
+import { IContextAccordionItem } from './models/contexts/item';
 
 const HeadlessAccordionButton = ({
   as = `button`,
   ...props
-}: IHeadlessAccordionButton) => {
+}: IAccordionButton) => {
   const As = as;
   const { multipleOpen, active, setActive } = useContext(ContextAccordion);
   const { eventKey } = useContext(ContextAccordionItem);
-  const handleOnClick = (
-    eventKey: IContextHeadlessAccordionItem[`eventKey`]
-  ) => {
+  const handleOnClick = (eventKey: IContextAccordionItem[`eventKey`]) => {
     const listActive = [...active];
     const includes = listActive.includes(eventKey);
     if (multipleOpen) {
       setActive(
         includes
           ? listActive.filter((item) => item !== eventKey)
-          : [...listActive, eventKey]
+          : [...listActive, eventKey],
       );
     } else {
       setActive(includes ? [] : [eventKey]);

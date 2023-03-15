@@ -1,29 +1,9 @@
-import { ElementType, useState, createContext, ReactNode } from 'react';
+import { useState } from 'react';
 import HeadlessAccordionItem from './item';
 import HeadlessAccordionButton from './button';
 import HeadlessAccordionPanel from './panel';
-
-export interface IContextHeadlessAccordion {
-  multipleOpen: boolean;
-  defaultActiveKey: number[];
-  active: number[];
-  setActive: (active: number[]) => void;
-}
-
-export interface IHeadlessAccordion {
-  as?: ElementType;
-  multipleOpen?: IContextHeadlessAccordion[`multipleOpen`];
-  defaultActiveKey?: IContextHeadlessAccordion[`defaultActiveKey`];
-  className?: string;
-  children?: ReactNode;
-}
-
-export const ContextAccordion = createContext<IContextHeadlessAccordion>({
-  multipleOpen: false,
-  defaultActiveKey: [],
-  active: [],
-  setActive: () => {},
-});
+import { IAccordion } from './models/accordion';
+import ContextAccordion from './contexts/accordion';
 
 const HeadlessAccordion = ({
   as = `div`,
@@ -31,10 +11,10 @@ const HeadlessAccordion = ({
   defaultActiveKey = [],
   className,
   children,
-}: IHeadlessAccordion) => {
+}: IAccordion) => {
   const As = as;
   const [active, setActive] =
-    useState<IHeadlessAccordion[`defaultActiveKey`]>(defaultActiveKey);
+    useState<IAccordion[`defaultActiveKey`]>(defaultActiveKey);
   return (
     <ContextAccordion.Provider
       value={{
