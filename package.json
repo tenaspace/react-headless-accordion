@@ -1,5 +1,5 @@
 {
-  "name": "react-headless-accordion",
+  "name": "@tenaspace/react-headless-accordion",
   "version": "0.1.0",
   "description": "",
   "main": "./dist/cjs/index.js",
