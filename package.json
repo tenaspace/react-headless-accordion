@@ -1,6 +1,6 @@
 {
   "name": "@tenaspace/react-headless-accordion",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -30,6 +30,7 @@
   "keywords": [
     "react",
     "typescript",
+    "accordion",
     "headless-accordion"
   ],
   "author": "tenaspace",
