@@ -3,3 +3,5 @@ node_modules
 .idea
 dist
 yarn-error.log
+yarn.lock
+package-json.lock
