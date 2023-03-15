@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/hooks/index.ts"],"names":[],"mappings":"AAAA,OAAO,gBAAgB,MAAM,uBAAuB,CAAC;AACrD,OAAO,yBAAyB,MAAM,gCAAgC,CAAC;AACvE,OAAO,gBAAgB,MAAM,sBAAsB,CAAC;AAEpD,MAAM,CAAC,IAAM,gBAAgB,GAAG,gBAAgB,CAAC;AACjD,MAAM,CAAC,IAAM,yBAAyB,GAAG,yBAAyB,CAAC;AACnE,MAAM,CAAC,IAAM,gBAAgB,GAAG,gBAAgB,CAAC"}
