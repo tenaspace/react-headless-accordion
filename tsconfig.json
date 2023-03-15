@@ -2,6 +2,10 @@
   "include": ["src"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "tslib": ["node_modules/tslib/tslib.d.ts"]
+    },
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
@@ -15,13 +19,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "moduleResolution": "node",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./",
-    "paths": {
-      "tslib": ["node_modules/tslib/tslib.d.ts"]
-    }
+    "forceConsistentCasingInFileNames": true
   }
 }

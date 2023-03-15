@@ -1,4 +1,4 @@
 export interface IContextHeadlessAccordionItem {
-  eventKey: number;
-  open: boolean;
+  eventKey: number
+  open: boolean
 }

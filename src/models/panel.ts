@@ -1,5 +1,5 @@
-import { ElementType, HTMLAttributes, ReactElement } from 'react';
+import { ElementType, HTMLAttributes, ReactElement } from 'react'
 
 export interface IHeadlessAccordionPanel extends HTMLAttributes<ReactElement> {
-  as?: ElementType;
+  as?: ElementType
 }
