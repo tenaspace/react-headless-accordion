@@ -1,7 +1,7 @@
 import { ElementType, useState, createContext, ReactNode } from 'react';
-import HeadlessAccordionItem from '#/ui/headless/accordion/item';
-import HeadlessAccordionButton from '#/ui/headless/accordion/button';
-import HeadlessAccordionPanel from '#/ui/headless/accordion/panel';
+import HeadlessAccordionItem from './item';
+import HeadlessAccordionButton from './button';
+import HeadlessAccordionPanel from './panel';
 
 export interface IContextHeadlessAccordion {
   multipleOpen: boolean;

@@ -1,7 +1,7 @@
-import { ElementType, useEffect, useContext, useRef, ReactNode } from 'react';
-import { useIsFirstRender, useEventListener } from './hooks';
-import { ContextAccordion } from '#/ui/headless/accordion';
-import { ContextAccordionItem } from '#/ui/headless/accordion/item';
+import { ElementType, useEffect, useContext, useRef, ReactNode } from "react";
+import { useIsFirstRender, useEventListener } from "./hooks";
+import { ContextAccordion } from ".";
+import { ContextAccordionItem } from "./item";
 
 export interface IHeadlessAccordionPanel {
   as?: ElementType;

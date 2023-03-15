@@ -1,5 +1,5 @@
 import { ElementType, useContext, createContext, ReactNode } from 'react';
-import { ContextAccordion } from '#/ui/headless/accordion';
+import { ContextAccordion } from '.';
 
 export interface IContextHeadlessAccordionItem {
   eventKey: number;
