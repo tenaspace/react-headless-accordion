@@ -2,6 +2,11 @@
 
 This is an unstyled React component helping you to easy to make the Accordion UI with your style.
 
+## Latest update
+- Changed import package to `import { HeadlessAccordion } from '@tenaspace/react-headless-accordion'`
+- Fixed bugs with transition
+- Improved source, reduce files 
+
 ## Installation
 
 ```shell
@@ -17,7 +22,7 @@ npm install @tenaspace/react-headless-accordion
 ## Usage
 
 ```tsx
-import HeadlessAccordion from '@tenaspace/react-headless-accordion'
+import { HeadlessAccordion } from '@tenaspace/react-headless-accordion'
 
 const list = [
   {
@@ -45,13 +50,13 @@ const App = () => {
             {({ open }) => {
               return (
                 <>
-                  <HeadlessAccordion.Button>
+                  <HeadlessAccordion.Button style={{ cursor: `pointer` }}>
                     {item.title} {open ? `-` : `+`}
                   </HeadlessAccordion.Button>
                   <HeadlessAccordion.Panel
                     style={{
                       transitionProperty: `max-height`,
-                      transitionDuration: `0.15s`,
+                      transitionDuration: `0.2s`,
                     }}
                   >
                     <div>{item.content}</div>
@@ -73,9 +78,12 @@ export default App
 
 | Name             | Mandatory | Type     | Default value | Component              | Note                                                                                                                                                                                                    |
 | ---------------- | --------- | -------- | ------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| as | optional | string | div | All | Set the tag HTML like whatever you want |
 | defaultActiveKey | optional  | number[] | []            | HeadlessAccordion      | Make the item you want open by default in the first load. Ex: `[0, 1]` => Item 1 and Item 2 will be opend in the first load. (The value must match with the `eventKey` of the `HeadlessAccordion.Item`) |
 | multipleOpen     | optional  | boolean  | false         | HeadlessAccordion      | Set it `true` if you want to open multiple the Item                                                                                                                                                     |
 | eventKey         | required  | number   |               | HeadlessAccordion.Item | The key ID of the Item                                                                                                                                                                                  |
+
+You can use the props `style` and `className` only in `HeadlessAccordion.Button` and `HeadlessAccordion.Panel`.
 
 ## Transition
 
@@ -87,7 +95,7 @@ Example with CSS inline:
 <HeadlessAccordion.Panel
   style={{
     transitionProperty: `max-height`,
-    transitionDuration: `0.15s`,
+    transitionDuration: `0.2s`,
   }}
 >
   ... your content here
@@ -97,7 +105,7 @@ Example with CSS inline:
 Example with Tailwind CSS
 
 ```tsx
-<HeadlessAccordion.Panel className={`transition-[max-height] duration-150`}>
+<HeadlessAccordion.Panel className={`transition-[max-height] duration-200`}>
   ... your content here
 </HeadlessAccordion.Panel>
 ```

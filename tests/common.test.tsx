@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 
 import 'jest-canvas-mock'
 
-import HeadlessAccordion from '../src'
+import { HeadlessAccordion } from '../src'
 
 describe('Common render', () => {
   it('renders without crashing', () => {
@@ -30,13 +30,13 @@ describe('Common render', () => {
             {({ open }) => {
               return (
                 <>
-                  <HeadlessAccordion.Button>
+                  <HeadlessAccordion.Button style={{ cursor: `pointer` }}>
                     {item.title} {open ? `-` : `+`}
                   </HeadlessAccordion.Button>
                   <HeadlessAccordion.Panel
                     style={{
                       transitionProperty: `max-height`,
-                      transitionDuration: `0.15s`,
+                      transitionDuration: `0.2s`,
                     }}
                   >
                     <div>{item.content}</div>
