@@ -2,6 +2,9 @@
 
 This is an unstyled React component helping you to easy to make the Accordion UI with your style.
 
+## Demo
+See how to use accordion basic and nested: [DEMO](https://react-package-demo.tenaspace.com/react-headless-accordion)
+
 ## Installation
 
 ```shell
