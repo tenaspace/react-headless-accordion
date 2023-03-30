@@ -2,11 +2,6 @@
 
 This is an unstyled React component helping you to easy to make the Accordion UI with your style.
 
-## Latest update
-- Changed import package to `import { HeadlessAccordion } from '@tenaspace/react-headless-accordion'`
-- Fixed bugs with transition
-- Improved source, reduce files 
-
 ## Installation
 
 ```shell
