@@ -12,9 +12,9 @@ import { useIsFirstRender, useEventListener } from './hooks'
 
 export interface IContextHeadlessAccordion {
   multipleOpen: boolean
-  defaultActiveKey: number[]
-  active: number[]
-  setActive: (active: number[]) => void
+  defaultActiveKey: string[]
+  active: IContextHeadlessAccordion[`defaultActiveKey`]
+  setActive: (active: IContextHeadlessAccordion[`active`]) => void
 }
 
 const ContextAccordion = createContext<IContextHeadlessAccordion>({
@@ -49,12 +49,12 @@ const Accordion = ({ as = `div`, multipleOpen = false, defaultActiveKey = [], ch
 }
 
 export interface IContextHeadlessAccordionItem {
-  eventKey: number
+  eventKey: string
   open: boolean
 }
 
 const ContextAccordionItem = createContext<IContextHeadlessAccordionItem>({
-  eventKey: -1,
+  eventKey: ``,
   open: false,
 })
 

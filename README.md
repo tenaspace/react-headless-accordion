@@ -43,8 +43,8 @@ const App = () => {
   return (
     <>
       <HeadlessAccordion defaultActiveKey={[0]}>
-        {list.map((item, key: number) => (
-          <HeadlessAccordion.Item key={key} eventKey={key}>
+        {list.map((item, key) => (
+          <HeadlessAccordion.Item key={key} eventKey={`${key}`}>
             {({ open }) => {
               return (
                 <>
@@ -77,9 +77,9 @@ export default App
 | Name             | Mandatory | Type     | Default value | Component              | Note                                                                                                                                                                                                    |
 | ---------------- | --------- | -------- | ------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | as | optional | string | div | All | Set the tag HTML like whatever you want |
-| defaultActiveKey | optional  | number[] | []            | HeadlessAccordion      | Make the item you want open by default in the first load. Ex: `[0, 1]` => Item 1 and Item 2 will be opend in the first load. (The value must match with the `eventKey` of the `HeadlessAccordion.Item`) |
+| defaultActiveKey | optional  | string[] | []            | HeadlessAccordion      | Make the item you want open by default in the first load. Ex: `['0', '1']` => Item 1 and Item 2 will be opend in the first load. (The value must match with the `eventKey` of the `HeadlessAccordion.Item`) |
 | multipleOpen     | optional  | boolean  | false         | HeadlessAccordion      | Set it `true` if you want to open multiple the Item                                                                                                                                                     |
-| eventKey         | required  | number   |               | HeadlessAccordion.Item | The key ID of the Item                                                                                                                                                                                  |
+| eventKey         | required  | string   |               | HeadlessAccordion.Item | The key ID of the Item                                                                                                                                                                                  |
 
 You can use the props `style` and `className` only in `HeadlessAccordion.Button` and `HeadlessAccordion.Panel`.
 

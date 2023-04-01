@@ -24,9 +24,9 @@ describe('Common render', () => {
       },
     ]
     render(
-      <HeadlessAccordion defaultActiveKey={[0]}>
+      <HeadlessAccordion defaultActiveKey={[`0`]}>
         {list.map((item, key: number) => (
-          <HeadlessAccordion.Item key={key} eventKey={key}>
+          <HeadlessAccordion.Item key={key} eventKey={`${key}`}>
             {({ open }) => {
               return (
                 <>
