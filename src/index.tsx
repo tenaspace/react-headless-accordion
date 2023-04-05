@@ -10,6 +10,12 @@ import React, {
 } from 'react'
 import { useIsFirstRender, useEventListener } from './hooks'
 
+interface ICommon {
+  as?: ElementType
+  className?: string | null
+  style?: CSSProperties
+}
+
 export interface IContextHeadlessAccordion {
   multipleOpen: boolean
   defaultActiveKey: string[]
@@ -24,14 +30,20 @@ const ContextAccordion = createContext<IContextHeadlessAccordion>({
   setActive: () => {},
 })
 
-export interface IHeadlessAccordion {
-  as?: ElementType
+export interface IHeadlessAccordion extends ICommon {
   multipleOpen?: IContextHeadlessAccordion[`multipleOpen`]
   defaultActiveKey?: IContextHeadlessAccordion[`defaultActiveKey`]
   children?: ReactNode
 }
 
-const Accordion = ({ as = `div`, multipleOpen = false, defaultActiveKey = [], children }: IHeadlessAccordion) => {
+const Accordion = ({
+  as = `div`,
+  className = null,
+  style = {},
+  multipleOpen = false,
+  defaultActiveKey = [],
+  children,
+}: IHeadlessAccordion) => {
   const As = as
   const [active, setActive] = useState<IHeadlessAccordion[`defaultActiveKey`]>(defaultActiveKey)
   return (
@@ -43,7 +55,9 @@ const Accordion = ({ as = `div`, multipleOpen = false, defaultActiveKey = [], ch
         setActive,
       }}
     >
-      <As>{children}</As>
+      <As className={className} style={style}>
+        {children}
+      </As>
     </ContextAccordion.Provider>
   )
 }
@@ -58,32 +72,30 @@ const ContextAccordionItem = createContext<IContextHeadlessAccordionItem>({
   open: false,
 })
 
-export interface IHeadlessAccordionItem {
-  as?: ElementType
+export interface IHeadlessAccordionItem extends ICommon {
   eventKey: IContextHeadlessAccordionItem[`eventKey`]
   id?: string
   children: ({ open }: { open?: IContextHeadlessAccordionItem[`open`] }) => ReactNode
 }
 
-const Item = ({ as = `div`, eventKey, id, children }: IHeadlessAccordionItem) => {
+const Item = ({ as = `div`, className = null, style = {}, eventKey, id, children }: IHeadlessAccordionItem) => {
   const As = as
   const { active } = useContext(ContextAccordion)
   const open: IContextHeadlessAccordionItem[`open`] = active ? active.includes(eventKey) : false
   return (
     <ContextAccordionItem.Provider value={{ eventKey, open }}>
-      <As id={id}>{children({ open })}</As>
+      <As id={id} className={className} style={style}>
+        {children({ open })}
+      </As>
     </ContextAccordionItem.Provider>
   )
 }
 
-export interface IHeadlessAccordionButton {
-  as?: ElementType
-  style?: CSSProperties
-  className?: string
+export interface IHeadlessAccordionButton extends ICommon {
   children?: ReactNode
 }
 
-const Button = ({ as = `div`, style = {}, className = ``, children }: IHeadlessAccordionButton) => {
+const Button = ({ as = `div`, className = null, style = {}, children }: IHeadlessAccordionButton) => {
   const As = as
   const { multipleOpen, active, setActive } = useContext(ContextAccordion)
   const { eventKey } = useContext(ContextAccordionItem)
@@ -97,20 +109,17 @@ const Button = ({ as = `div`, style = {}, className = ``, children }: IHeadlessA
     }
   }
   return (
-    <As style={style} className={`${className ?? ``}`} onClick={() => handleOnClick(eventKey)}>
+    <As className={className} style={style} onClick={() => handleOnClick(eventKey)}>
       {children}
     </As>
   )
 }
 
-export interface IHeadlessAccordionPanel {
-  as?: ElementType
-  style?: CSSProperties
-  className?: string
+export interface IHeadlessAccordionPanel extends ICommon {
   children?: ReactNode
 }
 
-const Panel = ({ as = `div`, style = {}, className = ``, children }: IHeadlessAccordionPanel) => {
+const Panel = ({ as = `div`, className = null, style = {}, children }: IHeadlessAccordionPanel) => {
   const As = as
   const { defaultActiveKey } = useContext(ContextAccordion)
   const { eventKey, open } = useContext(ContextAccordionItem)
@@ -166,7 +175,7 @@ const Panel = ({ as = `div`, style = {}, className = ``, children }: IHeadlessAc
         ...style,
         display: `${firstRender && !defaultActiveKey.includes(eventKey) ? `none` : null}`,
       }}
-      className={`${className ?? ``}`}
+      className={className}
     >
       {children}
     </As>
