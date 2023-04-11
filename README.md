@@ -4,7 +4,7 @@ This is an unstyled React component helping you to easy to make the Accordion UI
 
 ## Demo
 
-See how to use accordion basic and nested: [DEMO](https://react-package-demo.tenaspace.com/react-headless-accordion)
+See how to use accordion basic and nested: [DEMO](https://react-package.tenaspace.com/react-headless-accordion)
 
 ## Installation
 
