@@ -10,10 +10,13 @@ import React, {
 } from 'react'
 import { useIsFirstRender, useEventListener } from './hooks'
 
-interface ICommon {
-  as?: ElementType
+interface IStyleAndClassName {
   className?: string | null
   style?: CSSProperties
+}
+
+interface ICommon extends IStyleAndClassName {
+  as?: ElementType
 }
 
 export interface IContextHeadlessAccordion {
@@ -136,14 +139,14 @@ const Panel = ({ as = `div`, className = null, style = {}, children }: IHeadless
           ref.current.style.maxHeight = `${ref.current.scrollHeight}px`
         } else {
           ref.current.style.maxHeight = `${ref.current.scrollHeight}px`
-          const timeOut = setTimeout(() => {
+          const timeout = setTimeout(() => {
             if (ref && ref.current) {
               ref.current.style.overflow = `hidden`
               ref.current.style.maxHeight = `0`
             }
           }, 1)
           return () => {
-            clearTimeout(timeOut)
+            clearTimeout(timeout)
           }
         }
       }
