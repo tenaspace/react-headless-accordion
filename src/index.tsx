@@ -34,18 +34,18 @@ const ContextAccordion = createContext<IContextHeadlessAccordion>({
 })
 
 export interface IHeadlessAccordion extends ICommon {
+  children?: ReactNode
   multipleOpen?: IContextHeadlessAccordion[`multipleOpen`]
   defaultActiveKey?: IContextHeadlessAccordion[`defaultActiveKey`]
-  children?: ReactNode
 }
 
 const Accordion = ({
+  children,
   as = `div`,
   className = null,
   style = {},
   multipleOpen = false,
   defaultActiveKey = [],
-  children,
 }: IHeadlessAccordion) => {
   const As = as
   const [active, setActive] = useState<IHeadlessAccordion[`defaultActiveKey`]>(defaultActiveKey)
@@ -76,12 +76,12 @@ const ContextAccordionItem = createContext<IContextHeadlessAccordionItem>({
 })
 
 export interface IHeadlessAccordionItem extends ICommon {
+  children: ({ open }: { open?: IContextHeadlessAccordionItem[`open`] }) => ReactNode
   eventKey: IContextHeadlessAccordionItem[`eventKey`]
   id?: string
-  children: ({ open }: { open?: IContextHeadlessAccordionItem[`open`] }) => ReactNode
 }
 
-const Item = ({ as = `div`, className = null, style = {}, eventKey, id, children }: IHeadlessAccordionItem) => {
+const Item = ({ children, as = `div`, className = null, style = {}, eventKey, id }: IHeadlessAccordionItem) => {
   const As = as
   const { active } = useContext(ContextAccordion)
   const open: IContextHeadlessAccordionItem[`open`] = active ? active.includes(eventKey) : false
@@ -98,7 +98,7 @@ export interface IHeadlessAccordionButton extends ICommon {
   children?: ReactNode
 }
 
-const Button = ({ as = `div`, className = null, style = {}, children }: IHeadlessAccordionButton) => {
+const Button = ({ children, as = `div`, className = null, style = {} }: IHeadlessAccordionButton) => {
   const As = as
   const { multipleOpen, active, setActive } = useContext(ContextAccordion)
   const { eventKey } = useContext(ContextAccordionItem)
@@ -122,7 +122,7 @@ export interface IHeadlessAccordionPanel extends ICommon {
   children?: ReactNode
 }
 
-const Panel = ({ as = `div`, className = null, style = {}, children }: IHeadlessAccordionPanel) => {
+const Panel = ({ children, as = `div`, className = null, style = {} }: IHeadlessAccordionPanel) => {
   const As = as
   const { defaultActiveKey } = useContext(ContextAccordion)
   const { eventKey, open } = useContext(ContextAccordionItem)
