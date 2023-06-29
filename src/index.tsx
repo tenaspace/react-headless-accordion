@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { useIsFirstRender, useEventListener } from './hooks'
+import { useIsFirstRender, useEventListener, useIsClient } from './hooks'
 
 interface IStyleAndClassName {
   className?: string | null
@@ -128,6 +128,7 @@ const Panel = ({ children, as = `div`, className = null, style = {} }: IHeadless
   const { eventKey, open } = useContext(ContextAccordionItem)
   const ref = useRef<HTMLElement | null>(null)
   const firstRender = useIsFirstRender()
+  const isClient = useIsClient()
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -171,7 +172,7 @@ const Panel = ({ children, as = `div`, className = null, style = {} }: IHeadless
     ref,
   )
 
-  return (
+  return isClient ? (
     <As
       ref={ref}
       style={{
@@ -182,6 +183,8 @@ const Panel = ({ children, as = `div`, className = null, style = {} }: IHeadless
     >
       {children}
     </As>
+  ) : (
+    <></>
   )
 }
 
