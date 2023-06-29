@@ -183,9 +183,7 @@ const Panel = ({ children, as = `div`, className = null, style = {} }: IHeadless
     >
       {children}
     </As>
-  ) : (
-    <></>
-  )
+  ) : null
 }
 
 export const HeadlessAccordion = Object.assign(Accordion, {
