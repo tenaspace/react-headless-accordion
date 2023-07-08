@@ -1,61 +1,76 @@
 import React, {
-  createContext,
   CSSProperties,
   ElementType,
   ReactNode,
+  createContext,
   useContext,
   useEffect,
   useRef,
   useState,
 } from 'react'
-import { useIsFirstRender, useEventListener, useIsClient } from './hooks'
+import { useEventListener } from './hooks'
 
 interface IStyleAndClassName {
   className?: string | null
-  style?: CSSProperties
+  style?: CSSProperties | null
 }
 
 interface ICommon extends IStyleAndClassName {
   as?: ElementType
 }
 
-export interface IContextHeadlessAccordion {
+type IEventKey = string
+
+interface IContextAccordion {
   multipleOpen: boolean
-  defaultActiveKey: string[]
-  active: IContextHeadlessAccordion[`defaultActiveKey`]
-  setActive: (active: IContextHeadlessAccordion[`active`]) => void
+  defaultActiveKey: IEventKey[]
+  active: IEventKey[]
+  setActive: (active: IEventKey[]) => void
+  clicked: boolean
+  setClicked: (clicked: boolean) => void
 }
 
-const ContextAccordion = createContext<IContextHeadlessAccordion>({
+const ContextAccordion = createContext<IContextAccordion>({
   multipleOpen: false,
   defaultActiveKey: [],
   active: [],
   setActive: () => {},
+  clicked: false,
+  setClicked: () => {},
 })
 
-export interface IHeadlessAccordion extends ICommon {
+interface IAccordion extends ICommon {
   children?: ReactNode
-  multipleOpen?: IContextHeadlessAccordion[`multipleOpen`]
-  defaultActiveKey?: IContextHeadlessAccordion[`defaultActiveKey`]
+  multipleOpen?: boolean
+  defaultActiveKey?: IEventKey[]
+}
+
+const handleOpen = (eventKey: IEventKey, active: IEventKey[]) => {
+  return active.length > 0 ? active.includes(eventKey) : false
 }
 
 const Accordion = ({
   children,
   as = `div`,
   className = null,
-  style = {},
+  style = null,
   multipleOpen = false,
   defaultActiveKey = [],
-}: IHeadlessAccordion) => {
+}: IAccordion) => {
   const As = as
-  const [active, setActive] = useState<IHeadlessAccordion[`defaultActiveKey`]>(defaultActiveKey)
+
+  const [active, setActive] = useState(defaultActiveKey)
+  const [clicked, setClicked] = useState(false)
+
   return (
     <ContextAccordion.Provider
       value={{
         multipleOpen,
         defaultActiveKey,
-        active: active ?? [],
+        active,
         setActive,
+        clicked,
+        setClicked,
       }}
     >
       <As className={className} style={style}>
@@ -65,44 +80,46 @@ const Accordion = ({
   )
 }
 
-export interface IContextHeadlessAccordionItem {
+interface IContextItem {
   eventKey: string
-  open: boolean
 }
 
-const ContextAccordionItem = createContext<IContextHeadlessAccordionItem>({
+const ContextItem = createContext<IContextItem>({
   eventKey: ``,
-  open: false,
 })
 
-export interface IHeadlessAccordionItem extends ICommon {
-  children: ({ open }: { open?: IContextHeadlessAccordionItem[`open`] }) => ReactNode
-  eventKey: IContextHeadlessAccordionItem[`eventKey`]
+interface IItem extends ICommon {
+  children: ({ open }: { open?: boolean }) => ReactNode
+  eventKey: IEventKey
   id?: string
 }
 
-const Item = ({ children, as = `div`, className = null, style = {}, eventKey, id }: IHeadlessAccordionItem) => {
-  const As = as
+const Item = ({ children, as = `div`, className = null, style = null, eventKey, id }: IItem) => {
   const { active } = useContext(ContextAccordion)
-  const open: IContextHeadlessAccordionItem[`open`] = active ? active.includes(eventKey) : false
+
+  const As = as
+
   return (
-    <ContextAccordionItem.Provider value={{ eventKey, open }}>
+    <ContextItem.Provider value={{ eventKey }}>
       <As id={id} className={className} style={style}>
-        {children({ open })}
+        {children({ open: handleOpen(eventKey, active) })}
       </As>
-    </ContextAccordionItem.Provider>
+    </ContextItem.Provider>
   )
 }
 
-export interface IHeadlessAccordionButton extends ICommon {
+interface IButton extends ICommon {
   children?: ReactNode
 }
 
-const Button = ({ children, as = `div`, className = null, style = {} }: IHeadlessAccordionButton) => {
-  const As = as
-  const { multipleOpen, active, setActive } = useContext(ContextAccordion)
-  const { eventKey } = useContext(ContextAccordionItem)
-  const handleOnClick = (eventKey: IContextHeadlessAccordionItem[`eventKey`]) => {
+const Button = ({ children, as = `div`, className = null, style = null }: IButton) => {
+  const { multipleOpen, active, setActive, clicked, setClicked } = useContext(ContextAccordion)
+  const { eventKey } = useContext(ContextItem)
+
+  const handleOnClick = (eventKey: IEventKey) => {
+    if (!clicked) {
+      setClicked(true)
+    }
     const listActive = [...active]
     const includes = listActive.includes(eventKey)
     if (multipleOpen) {
@@ -111,6 +128,9 @@ const Button = ({ children, as = `div`, className = null, style = {} }: IHeadles
       setActive(includes ? [] : [eventKey])
     }
   }
+
+  const As = as
+
   return (
     <As className={className} style={style} onClick={() => handleOnClick(eventKey)}>
       {children}
@@ -118,52 +138,65 @@ const Button = ({ children, as = `div`, className = null, style = {} }: IHeadles
   )
 }
 
-export interface IHeadlessAccordionPanel extends ICommon {
+interface IPanel extends ICommon {
   children?: ReactNode
 }
 
-const Panel = ({ children, as = `div`, className = null, style = {} }: IHeadlessAccordionPanel) => {
-  const As = as
-  const { defaultActiveKey } = useContext(ContextAccordion)
-  const { eventKey, open } = useContext(ContextAccordionItem)
+const Panel = ({ children, as = `div`, className = null, style = null }: IPanel) => {
+  const { active, clicked } = useContext(ContextAccordion)
+  const { eventKey } = useContext(ContextItem)
+
   const ref = useRef<HTMLElement | null>(null)
-  const firstRender = useIsFirstRender()
-  const isClient = useIsClient()
 
   useEffect(() => {
-    if (ref && ref.current) {
-      if (!firstRender) {
-        if (open) {
+    if (clicked) {
+      let open = handleOpen(eventKey, active)
+      if (open) {
+        if (ref.current) {
           ref.current.style.display = `block`
           ref.current.style.overflow = `hidden`
           ref.current.style.maxHeight = `0`
-          ref.current.style.maxHeight = `${ref.current.scrollHeight}px`
-        } else {
-          ref.current.style.maxHeight = `${ref.current.scrollHeight}px`
-          const timeout = setTimeout(() => {
-            if (ref && ref.current) {
-              ref.current.style.overflow = `hidden`
-              ref.current.style.maxHeight = `0`
-            }
-          }, 1)
-          return () => {
-            clearTimeout(timeout)
+        }
+        const timeout = setTimeout(() => {
+          if (ref.current) {
+            ref.current.style.maxHeight = `${ref.current.scrollHeight}px`
           }
+        }, 0)
+        return () => {
+          clearTimeout(timeout)
+        }
+      } else {
+        if (ref.current) {
+          ref.current.style.maxHeight = `${ref.current.scrollHeight}px`
+        }
+        const timeout = setTimeout(() => {
+          if (ref.current) {
+            ref.current.style.overflow = `hidden`
+            ref.current.style.maxHeight = `0`
+          }
+        }, 0)
+        return () => {
+          clearTimeout(timeout)
         }
       }
     }
-  }, [firstRender, ref, open])
+  }, [ref, eventKey, active, clicked])
 
   useEventListener(
     `transitionend`,
     () => {
-      if (ref && ref.current) {
-        if (!firstRender) {
-          if (open) {
+      if (clicked) {
+        let open = handleOpen(eventKey, active)
+        if (open) {
+          if (ref.current) {
             ref.current.style.display = ``
-          } else {
+          }
+        } else {
+          if (ref.current) {
             ref.current.style.display = `none`
           }
+        }
+        if (ref.current) {
           ref.current.style.overflow = ``
           ref.current.style.maxHeight = ``
         }
@@ -172,18 +205,17 @@ const Panel = ({ children, as = `div`, className = null, style = {} }: IHeadless
     ref,
   )
 
-  return isClient ? (
-    <As
-      ref={ref}
-      style={{
-        ...style,
-        display: `${firstRender && !defaultActiveKey.includes(eventKey) ? `none` : null}`,
-      }}
-      className={className}
-    >
+  const firstOpen = useRef(handleOpen(eventKey, active))
+
+  const firstStyle: CSSProperties | null = firstOpen.current ? null : { display: `none` }
+
+  const As = as
+
+  return (
+    <As ref={ref} className={className} style={{ ...style, ...firstStyle }}>
       {children}
     </As>
-  ) : null
+  )
 }
 
 export const HeadlessAccordion = Object.assign(Accordion, {
