@@ -150,7 +150,7 @@ const Panel = ({ children, as = `div`, className = null, style = null }: IPanel)
 
   useEffect(() => {
     if (clicked) {
-      let open = handleOpen(eventKey, active)
+      const open = handleOpen(eventKey, active)
       if (open) {
         if (ref.current) {
           ref.current.style.display = `block`
@@ -186,7 +186,7 @@ const Panel = ({ children, as = `div`, className = null, style = null }: IPanel)
     `transitionend`,
     () => {
       if (clicked) {
-        let open = handleOpen(eventKey, active)
+        const open = handleOpen(eventKey, active)
         if (open) {
           if (ref.current) {
             ref.current.style.display = ``
