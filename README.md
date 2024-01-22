@@ -1,6 +1,6 @@
 # @tenaspace/react-headless-accordion
 
-This is an unstyled React component helping you to easy to make the Accordion UI with your style.
+This is an unstyled React component that helps you to easily make the Accordion UI with your style.
 
 ## Demo
 
